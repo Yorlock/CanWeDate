@@ -1,0 +1,768 @@
+package com.sample
+import org.kie.api.runtime.KieRuntime
+import javax.swing.*;
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import com.sample.Main;
+global JFrame frame
+
+rule "What kind of preexisting relationship do you have with this person?"
+    when
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("OTHER");
+    option.add("PERSONAL");
+    option.add("PROFESSIONAL");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "What kind of preexisting relationship do you have with this person?", option);
+    insert (answer);
+end
+
+rule "What kind of preexisting relationship do you have with this person? - OTHER - What kind?"
+    when
+    Content(question == "What kind of preexisting relationship do you have with this person?" && answer == "OTHER")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("IT'S A GHOST THAT'S BEEN HAUNTING ME");
+    option.add("IT'S MY BEST FRIEND'S EX");
+    option.add("IT'S MY XBOX/WII/PLAYSTATION");
+    option.add("IT'S MY PET OR OTHER ANIMAL");
+    option.add("IT'S MY LOVEBOT");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "What kind?", option);
+    insert (answer);
+end
+
+rule "What kind? - IT'S A GHOST THAT'S BEEN HAUNTING ME - Like in that Demi Moore/Patrick Swayze movie?"
+    when
+    Content(question == "What kind?" && answer == "IT'S A GHOST THAT'S BEEN HAUNTING ME")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES, EXACTLY LIKE THAT!");
+    option.add("NO, IT'S REALLY NOTHING LIKE THAT!");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Like in that Demi Moore/Patrick Swayze movie?", option);
+    insert (answer);
+end
+
+rule "FUCK THAT GHOST"
+    when
+    Content(question == "Like in that Demi Moore/Patrick Swayze movie?" && answer == "YES, EXACTLY LIKE THAT!" ||
+    question == "Would you have dated this person when among the living?" && answer == "YES")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "FUCK THAT GHOST");
+end
+
+rule "Like in that Demi Moore/Patrick Swayze movie? - NO, IT'S REALLY NOTHING LIKE THAT! - Would you have dated this person when among the living?"
+    when
+    Content(question == "Like in that Demi Moore/Patrick Swayze movie?" && answer == "NO, IT'S REALLY NOTHING LIKE THAT!")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Would you have dated this person when among the living?", option);
+    insert (answer);
+end
+
+rule "PROBABLY BETTER NOT"
+    when
+    Content(question == "Would you have dated this person when among the living?" && answer == "NO" ||
+    question == "Do you really have a choice in the matter?" && answer == "YES" || 
+    question == "Are you done having sex with other people?" && answer == "NO" || 
+    question == "Do you like drama?" && answer == "NO" || 
+    question == "Do you wanna get high?" && answer == "NO" || 
+    question == "DOES YOUR JOB SUCK?" && answer == "NO" || 
+    question == "Is your health at any serious risk?" && answer == "YES" || 
+    question == "Do you live in either New York or San Francisco?" && answer == "NO" || 
+    question == "Is this just an attempt to get your kids back?" && answer == "NO" || 
+    question == "ARE YOU CRAZY?" && answer == "MAYBE A LITTLE" ||
+    question == "Is there a restraining order involved?" && answer == "NO" ||
+    question == "When are you gonna realize that I'm the only one who's ever gonna love you?!" && answer == "NEVER")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "PROBABLY BETTER NOT");
+end
+
+rule "What kind? - IT'S MY BEST FRIEND'S EX - How long since they stopped dating?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY BEST FRIEND'S EX")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("WELL, TECHNICALLY, THEY HAVEN'T, REALLY...");
+    option.add("OH, IT'S BEEN AWHILE");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "How long since they stopped dating?", option);
+    insert (answer);
+end
+
+rule "ABSOLUTELY NOT!!!"
+    when
+    Content(question == "How long since they stopped dating?" && answer == "WELL, TECHNICALLY, THEY HAVEN'T, REALLY..." ||
+    question == "Are they still friends? Or enemies?" && answer == "THEY HAVE SWORN TO KILL EACH OTHER ON SIGHT" ||
+    question == "Are you a farmer?" && answer == "NO" ||
+    question == "Will you please move there to make the rest of us feel better?" && answer == "NO" ||
+    question == "Are you Woody Allen?" && answer == "NO" ||
+    question == "Did you grow up together, like from childhood?" && answer == "YES" ||
+    question == "What kind?" && answer == "IT'S MY BROTHER, SISTER, FIRST COUSIN, AUNT, UNCLE, PARENT, GRANDPARENT OR CHILD" ||
+    question == "What kind?" && answer == "IT'S MY TEACHER")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "ABSOLUTELY NOT!!!");
+end
+
+rule "How long since they stopped dating? - OH, IT'S BEEN AWHILE - Are they still friends? Or enemies?"
+    when
+    Content(question == "How long since they stopped dating?" && answer == "OH, IT'S BEEN AWHILE")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("THEY HAVE SWORN TO KILL EACH OTHER ON SIGHT");
+    option.add("THEY'RE FRIENDLY ENOUGH");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Are they still friends? Or enemies?", option);
+    insert (answer);
+end
+
+
+rule "CLEAR IT WITH YOUR FRIEND FIRST, BROS BEFORE HOS, RIGHT? OR VICE VERSA, AS THE CASE MAY BE."
+    when
+    Content(question == "Are they still friends? Or enemies?" && answer == "THEY'RE FRIENDLY ENOUGH")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "CLEAR IT WITH YOUR FRIEND FIRST, BROS BEFORE HOS, RIGHT? OR VICE VERSA, AS THE CASE MAY BE.");
+end
+
+rule "What kind? - IT'S MY XBOX/WII/PLAYSTATION - How old are you again?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY XBOX/WII/PLAYSTATION")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("I'M OVER 18");
+    option.add("I'M UNDER 18");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "How old are you again?", option);
+    insert (answer);
+end
+
+rule "How old are you again? - I'M OVER 18 - Do you want to be alone for the rest of you life?"
+    when
+    Content(question == "How old are you again?" && answer == "I'M OVER 18")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Do you want to be alone for the rest of you life?", option);
+    insert (answer);
+end
+
+rule "PUT DOWN THE CONTROLLER AND GO TAKE A SHOWER. YOUR GENITALS WILL THANK YOU."
+    when
+    Content(question == "Do you want to be alone for the rest of you life?" && answer == "NO")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "PUT DOWN THE CONTROLLER AND GO TAKE A SHOWER. YOUR GENITALS WILL THANK YOU.");
+end
+
+
+rule "IT'S FOR THE BEST RIGHT NOW. GAME ON!"
+    when
+    Content(question == "Do you want to be alone for the rest of you life?" && answer == "YES" ||
+    question == "How old are you again?" && answer == "I'M UNDER 18")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "IT'S FOR THE BEST RIGHT NOW. GAME ON!");
+end
+
+
+rule "What kind? - IT'S MY PET OR OTHER ANIMAL - Seriously? Like, you want to date an animal?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY PET OR OTHER ANIMAL")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Seriously? Like, you want to date an animal?", option);
+    insert (answer);
+end
+
+rule "Seriously? Like, you want to date an animal? - NO - Ok, well, not 'date' per se but... ABSOLUTELY NOT!!!"
+    when
+    Content(question == "Seriously? Like, you want to date an animal?" && answer == "NO")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "Ok, well, not 'date' per se but... ABSOLUTELY NOT!!!");
+end
+
+rule "Seriously? Like, you want to date an animal? - YES - Are you a farmer?"
+    when
+    Content(question == "Seriously? Like, you want to date an animal?" && answer == "YES")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Are you a farmer?", option);
+    insert (answer);
+end
+
+
+rule "I GUESS IT'S OK, BUT YOU SHOULD PROBABLY KEEP IT ON THE DOWNLOW."
+    when
+    Content(question == "Are you a farmer?" && answer == "YES" || 
+    question == "Do you live in Japan?" && answer == "YES" ||
+    question == "Will you please move there to make the rest of us feel better?" && answer == "YES" ||
+    question == "Did you grow up together, like from childhood?" && answer == "NO" || 
+    question == "Do you live in a sparsely populated area? Or the South?" && answer == "YES")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "I GUESS IT'S OK, BUT YOU SHOULD PROBABLY KEEP IT ON THE DOWNLOW.");
+end
+
+rule "What kind? - IT'S MY LOVEBOT - Do you live in Japan?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY LOVEBOT")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Do you live in Japan?", option);
+    insert (answer);
+end
+
+
+rule "Do you live in Japan? - NO - Will you please move there to make the rest of us feel better?"
+    when
+    Content(question == "Do you live in Japan?" && answer == "NO")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Will you please move there to make the rest of us feel better?", option);
+    insert (answer);
+end
+
+
+rule "What kind of preexisting relationship do you have with this person? - PERSONAL - ARE YOU RELATED?"
+    when
+    Content(question == "What kind of preexisting relationship do you have with this person?" && answer == "PERSONAL")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "ARE YOU RELATED?", option);
+    insert (answer);
+end
+
+rule "ARE YOU RELATED? - NO - What kind?"
+    when
+    Content(question == "ARE YOU RELATED?" && answer == "NO")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("IT'S MY HIGH SCHOOL CRUSH");
+    option.add("IT'S MY DUNGEON MASTER");
+    option.add("IT'S MY CELLMATE");
+    option.add("IT'S MY SOULMATE");
+    option.add("IT'S MY ROOMMATE");
+    option.add("IT'S MY DEALER");
+    option.add("IT'S MY BEST FRIEND'S SIBLING");
+    option.add("IT'S MY MISSED CONNECTION");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "What kind?", option);
+    insert (answer);
+end
+
+rule "YOU'VE MISSED THE POINT OF THIS CHART. AND YOU DISGUST ME."
+    when
+    Content(question == "What kind?" && answer == "IT'S MY HIGH SCHOOL CRUSH")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "YOU'VE MISSED THE POINT OF THIS CHART. AND YOU DISGUST ME.");
+end
+
+
+rule "YES, FOR THE LOVE OF GOD, SOMEONE PLEASE HAVE SEX WITH THE DUNGEON MASTER!"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY DUNGEON MASTER")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "YES, FOR THE LOVE OF GOD, SOMEONE PLEASE HAVE SEX WITH THE DUNGEON MASTER!");
+end
+
+rule "What kind? - IT'S MY CELLMATE - Do you really have a choice in the matter?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY CELLMATE")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Do you really have a choice in the matter?", option);
+    insert (answer);
+end
+
+rule "WELL, IT'S PRETTY OBVIOUS, BUT GO AHEAD AND GIVE IT A SHOT."
+    when
+    Content(question == "Do you really have a choice in the matter?" && answer == "NO" ||
+    question == "Are you done having sex with other people?" && answer == "YES")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "WELL, IT'S PRETTY OBVIOUS, BUT GO AHEAD AND GIVE IT A SHOT.");
+end
+
+
+rule "What kind? - IT'S MY SOULMATE - Are you done having sex with other people?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY SOULMATE")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("NO");
+    option.add("YES");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Are you done having sex with other people?", option);
+    insert (answer);
+end
+
+
+rule "What kind? - IT'S MY ROOMMATE - Do you like drama?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY ROOMMATE")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Do you like drama?", option);
+    insert (answer);
+end
+
+
+rule "AWESOME! LEAVING THE HOUSE AND PUTTING ON CLOTHES ARE TWO OF THE WORST PARTS OF DATING, SO THIS IS ACTUALLY ONE ON THE BETTER DECISIONS YOU'LL EVER MAKE! GO FOR IT!"
+    when
+    Content(question == "Do you like drama?" && answer == "YES")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "AWESOME! LEAVING THE HOUSE AND PUTTING ON CLOTHES ARE TWO OF THE WORST PARTS OF DATING, SO THIS IS ACTUALLY ONE ON THE BETTER DECISIONS YOU'LL EVER MAKE! GO FOR IT!");
+end
+
+rule "What kind? - IT'S MY DEALER - Do you wanna get high?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY DEALER")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Do you wanna get high?", option);
+    insert (answer);
+end
+
+
+rule "What kind? - IT'S MY BEST FRIEND'S SIBLING - Are you crazy?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY BEST FRIEND'S SIBLING")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("I DON'T THINK SO");
+    option.add("A LITTLE");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Are you crazy?", option);
+    insert (answer);
+end
+
+rule "YOU'RE A BAD LIAR"
+    when
+    Content(question == "Are you crazy?" && answer == "I DON'T THINK SO" ||
+    question == "How lonely are you?" && answer == "NOT AT ALL")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "YOU'RE A BAD LIAR");
+end
+
+
+rule "What kind? - IT'S MY MISSED CONNECTION - How lonely are you?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY MISSED CONNECTION")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("A LITTLE");
+    option.add("NOT AT ALL");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "How lonely are you?", option);
+    insert (answer);
+end
+
+
+rule "ARE YOU RELATED? - YES - By blood?"
+    when
+    Content(question == "ARE YOU RELATED?" && answer == "YES")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "By blood?", option);
+    insert (answer);
+end
+
+rule "By blood? - NO - What kind?"
+    when
+    Content(question == "By blood?" && answer == "NO")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("IT'S MY BROTHER'S WIFE'S COUSIN, IF YOU CAN BELIEVE IT");
+    option.add("IT'S MY STEP OR ADOPTED SIBLING OR CHILD");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "What kind?", option);
+    insert (answer);
+end
+
+rule "MAKE IT HAPPEN, CAPTAIN"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY BROTHER'S WIFE'S COUSIN, IF YOU CAN BELIEVE IT" || 
+    question == "Are you Woody Allen?" && answer == "YES")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "MAKE IT HAPPEN, CAPTAIN");
+end
+
+
+rule "What kind? - IT'S MY STEP OR ADOPTED SIBLING OR CHILD - Are the parents still married?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY STEP OR ADOPTED SIBLING OR CHILD")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Are the parents still married?", option);
+    insert (answer);
+end
+
+rule "Are the parents still married? - YES - Are you Woody Allen?"
+    when
+    Content(question == "Are the parents still married?" && answer == "YES")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Are you Woody Allen?", option);
+    insert (answer);
+end
+
+
+rule "Are the parents still married? - NO - Did you grow up together, like from childhood?"
+    when
+    Content(question == "Are the parents still married?" && answer == "NO")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Did you grow up together, like from childhood?", option);
+    insert (answer);
+end
+
+
+rule "By blood? - YES - What kind?"
+    when
+    Content(question == "By blood?" && answer == "YES")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("IT'S MY BROTHER, SISTER, FIRST COUSIN, AUNT, UNCLE, PARENT, GRANDPARENT OR CHILD");
+    option.add("IT'S MY SECOND COUSIN, HALF - COUSIN OR MORE DISTANT");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "What kind?", option);
+    insert (answer);
+end
+
+
+rule "What kind? - IT'S MY SECOND COUSIN, HALF - COUSIN OR MORE DISTANT - Are you really in love or just desperate?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY SECOND COUSIN, HALF - COUSIN OR MORE DISTANT")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("GOD, I AM SO DESPERATE");
+    option.add("NO, IT'S REALLY LOVE. I'M SURE");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Are you really in love or just desperate?", option);
+    insert (answer);
+end
+
+rule "HANG IN THERE, PAL. YOU'LL MEET SOMEONE ELSE."
+    when
+    Content(question == "Are you really in love or just desperate?" && answer == "GOD, I AM SO DESPERATE" ||
+    question == "Do you live in a sparsely populated area? Or the South?" && answer == "NO")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "HANG IN THERE, PAL. YOU'LL MEET SOMEONE ELSE.");
+end
+
+
+rule "Are you really in love or just desperate? - NO, IT'S REALLY LOVE. I'M SURE - Do you live in a sparsely populated area? Or the South?"
+    when
+    Content(question == "Are you really in love or just desperate?" && answer == "NO, IT'S REALLY LOVE. I'M SURE")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Do you live in a sparsely populated area? Or the South?", option);
+    insert (answer);
+end
+
+
+rule "What kind of preexisting relationship do you have with this person? - PROFESSIONAL - What kind?"
+    when
+    Content(question == "What kind of preexisting relationship do you have with this person?" && answer == "PROFESSIONAL")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("IT'S MY TEACHER");
+    option.add("IT'S MY STUDENT");
+    option.add("IT'S MY PROFESSOR");
+    option.add("IT'S MY BOSS/COWORKER");
+    option.add("IT'S MY PHYSICIAN");
+    option.add("IT'S MY LANDORD");
+    option.add("IT'S MY SOCIAL WORKER");
+    option.add("IT'S MY THERAPIST");
+    option.add("IT'S MY STALKER");
+    option.add("IT'S MY COSTAR");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "What kind?", option);
+    insert (answer);
+end
+
+
+rule "What kind? - IT'S MY STUDENT - Where do you teach?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY STUDENT")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("COLLEGE");
+    option.add("ANYTHING BELOW COLLEGE");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Where do you teach?", option);
+    insert (answer);
+end
+
+rule "Where do you teach? - COLLEGE - DOES YOUR JOB SUCK?"
+    when
+    Content(question == "Where do you teach?" && answer == "COLLEGE")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "DOES YOUR JOB SUCK?", option);
+    insert (answer);
+end
+
+
+rule "Where do you teach? - ANYTHING BELOW COLLEGE - Whoa. You're talking about having sex with a minor, right?"
+    when
+    Content(question == "Where do you teach?" && answer == "ANYTHING BELOW COLLEGE")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YEAH");
+    option.add("NO, OF COURSE NOT");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Whoa. You're talking about having sex with a minor, right?", option);
+    insert (answer);
+end
+
+rule "THOUGHTCRIME! OUR AGENTS HAVE BEEN SENT TO YOUR LOCATION. RESISTANCE IS USELESS."
+    when
+    Content(question == "Whoa. You're talking about having sex with a minor, right?" && answer == "YEAH" ||
+    question == "Whoa. You're talking about having sex with a minor, right?" && answer == "NO, OF COURSE NOT")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "THOUGHT CRIME! OUR AGENTS HAVE BEEN SENT TO YOUR LOCATION. RESISTANCE IS USELESS.");
+end
+
+
+rule "What kind? - IT'S MY BOSS/COWORKER - DOES YOUR JOB SUCK?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY BOSS/COWORKER")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("NO");
+    option.add("YES");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "DOES YOUR JOB SUCK?", option);
+    insert (answer);
+end
+
+
+rule "What kind? - IT'S MY PHYSICIAN - Is your health at any serious risk?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY PHYSICIAN")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Is your health at any serious risk?", option);
+    insert (answer);
+end
+
+
+rule "What kind? - IT'S MY LANDORD - Do you live in either New York or San Francisco?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY LANDORD")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Do you live in either New York or San Francisco?", option);
+    insert (answer);
+end
+
+rule "DO WHATEVER IT TAKES"
+    when
+    Content(question == "Do you live in either New York or San Francisco?" && answer == "YES" || 
+    question == "Is this just an attempt to get your kids back?" && answer == "YES")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "DO WHATEVER IT TAKES");
+end
+
+
+rule "What kind? - IT'S MY SOCIAL WORKER - Is this just an attempt to get your kids back?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY SOCIAL WORKER")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Is this just an attempt to get your kids back?", option);
+    insert (answer);
+end
+
+
+rule "What kind? - IT'S MY THERAPIST - ARE YOU CRAZY?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY THERAPIST")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("MAYBE A LITTLE");
+    option.add("I DON'T THINK SO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "ARE YOU CRAZY?", option);
+    insert (answer);
+end
+
+
+rule "What kind? - IT'S MY STALKER - Is there a restraining order involved?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY STALKER")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Is there a restraining order involved?", option);
+    insert (answer);
+end
+
+
+rule "Is there a restraining order involved? - YES - When are you gonna realize that I'm the only one who's ever gonna love you?!"
+    when
+    Content(question == "Is there a restraining order involved?" && answer == "YES")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("NEVER");
+    option.add("TODAY!!");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "When are you gonna realize that I'm the only one who's ever gonna love you?!", option);
+    insert (answer);
+end
+
+
+rule "What kind? - IT'S MY COSTAR - Are you just trying to generate publicity and dispel certain rumors?"
+    when
+    Content(question == "What kind?" && answer == "IT'S MY COSTAR")
+    then
+    ArrayList<String> option = new ArrayList<>();
+    option.add("YES");
+    option.add("NO");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "Are you just trying to generate publicity and dispel certain rumors?", option);
+    insert (answer);
+end
+
+rule "HI, ROBERT PATTINSON."
+    when
+    Content(question == "Are you just trying to generate publicity and dispel certain rumors?" && answer == "YES")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "HI, ROBERT PATTINSON.");
+end
+
+
+rule "NOT ADVISED, BUT WE'LL ALLOW IT OF YOU MAKE A SEX TAPE."
+    when
+    Content(question == "Are you just trying to generate publicity and dispel certain rumors?" && answer == "NO")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "NOT ADVISED, BUT WE'LL ALLOW IT OF YOU MAKE A SEX TAPE.");
+end
+
+rule "FINGERS"
+    when
+    Content(answer == "FINGERS" ||
+    question == "When are you gonna realize that I'm the only one who's ever gonna love you?!" && answer == "TODAY!!" ||
+    question == "ARE YOU CRAZY?" && answer == "I DON'T THINK SO" ||
+    question == "Is your health at any serious risk?" && answer == "NO")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "FINGERS");
+    ArrayList<String> option = new ArrayList<>();
+    option.add("BONE");
+    option.add("SCREW");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "?", option);
+    insert (answer);
+end
+
+rule "BONE"
+    when
+    Content(answer == "BONE" ||
+    question == "DOES YOUR JOB SUCK?" && answer == "YES" || 
+    question == "What kind?" && answer == "IT'S MY PROFESSOR")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "BONE");
+    ArrayList<String> option = new ArrayList<>();
+    option.add("FINGERS");
+    option.add("SCREW");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "?", option);
+    insert (answer);
+end
+
+rule "SCREW"
+    when
+    Content(answer == "SCREW" || 
+    question == "Do you wanna get high?" && answer == "YES" ||
+    question == "Are you crazy?" && answer == "A LITTLE" ||
+    question == "How lonely are you?" && answer == "A LITTLE")
+    then
+    recommendFunction(frame, kcontext.getKieRuntime(), "SCREW");
+    ArrayList<String> option = new ArrayList<>();
+    option.add("FINGERS");
+    option.add("BONE");
+    Content answer = answerFunction(frame, kcontext.getKieRuntime(), "?", option);
+    insert (answer);
+end
+
+function void recommendFunction(JFrame frame, KieRuntime krt, String recommended) {
+    JPanel panel = new JPanel();
+    JLabel label = new JLabel();
+    if(recommended == "SCREW" || recommended == "FINGERS" || recommended == "BONE")
+    {
+    	ImageIcon icon = new ImageIcon(recommended + ".png");
+    	label.setText(recommended);
+    	label.setIcon(icon);
+    	label.setHorizontalTextPosition(JLabel.CENTER);
+    	label.setVerticalTextPosition(JLabel.TOP);
+    	label.setHorizontalAlignment(JLabel.CENTER);
+    	label.setVerticalAlignment(JLabel.CENTER);
+	    panel.add(label);
+		JOptionPane.showMessageDialog(frame, panel, "Message", JOptionPane.PLAIN_MESSAGE);
+    }
+    else
+    {
+    	label.setText(recommended);
+	    panel.add(label);
+		JOptionPane.showMessageDialog(frame, panel);
+    }
+}
+
+function Content answerFunction(JFrame frame, KieRuntime krt, String contentQuestion, ArrayList answer_i) {
+
+    class Listener implements ItemListener {
+        private Content answer;
+        private String chosen;
+        public Listener(Content answer, String chosen) {
+            this.answer = answer;
+            this.chosen = chosen;
+        }
+
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+                answer.setAnswer(chosen);
+            }
+        }
+    }
+    
+    Content answer = new Content(contentQuestion, (String) answer_i.get(0));
+    final JPanel panel = new JPanel(new GridLayout(0, 1));
+    panel.add(new JLabel(contentQuestion));
+    ArrayList <JRadioButton> listOfButtons = new ArrayList<>();
+    for (int i = 0; i < answer_i.size(); i++) {
+        String text = (String) answer_i.get(i);
+        JRadioButton button = new JRadioButton(text);
+        Listener listener = new Listener(answer, text);
+        button.addItemListener(listener);
+        listOfButtons.add(button);
+    }
+    listOfButtons.get(0).setSelected(true);
+    answer.setAnswer((String) answer_i.get(0));
+    ButtonGroup group = new ButtonGroup();
+    for (int i = 0; i < listOfButtons.size(); i++) {
+        group.add(listOfButtons.get(i));
+        panel.add(listOfButtons.get(i));
+    }
+    if(JOptionPane.showConfirmDialog(frame, panel, "Question", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE) < 0){
+    	answer.setAnswer("Something to end the program.");
+    }
+    return answer;
+}
